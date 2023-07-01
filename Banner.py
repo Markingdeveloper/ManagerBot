@@ -13,14 +13,14 @@ def check_chnl(message):
 	bot.send_chat_action(message.chat.id, "typing")
 	not_found = False
 	try:
-		join = bot.get_chat_member(-1001911844496, message.from_user.id)
+		join = bot.get_chat_member(GROUP_ID, message.from_user.id)
 	except Exception as e:
 		if 'user not found' in str(e): not_found = True    
 	if (join.status == "kicked") or (join.status == "left") or not_found == True:
 		
 		channelkey = types.InlineKeyboardMarkup(row_width=1)
 		
-		channellink = types.InlineKeyboardButton("Feature Channel", url='t.me/BannerNews')
+		channellink = types.InlineKeyboardButton("Feature Channel", url='CHANNEL_LINK')
 		
 		channelkey.add(channellink)
 		bot.reply_to(message, f"Hi {message.from_user.first_name}!Looks like you haven't subscribed to our channel yet!To activate the bot,you need subscribe to our channel!", reply_markup=channelkey)
@@ -33,9 +33,9 @@ def check_chnl(message):
 def id(message):
 		bot.send_chat_action(message.chat.id, "typing")
 		if message.reply_to_message:
-		    if message.reply_to_message.from_user.id == 5852107619:
+		    if message.reply_to_message.from_user.id == Bot_ID:
 		        bot.send_message(message.chat.id, "Sorry, but I can't share my ID")
-		    elif message.reply_to_message.from_user.id ==1110913967:
+		    elif message.reply_to_message.from_user.id ==DEVELOPER_ID:
 		        bot.send_message(message.chat.id, "Sorry, but I can't share my developer's ID")
 		    else:
 		        bot.send_message(message.chat.id, f"ID of {message.reply_to_message.from_user.first_name} is {message.reply_to_message.from_user.id}")
@@ -46,7 +46,7 @@ def id(message):
 def news(message):
 		for user in message.new_chat_members:
 		    bot.send_chat_action(message.chat.id, "typing")
-		    if user.id == 5852107619:
+		    if user.id == BOT_ID:
 		    	bot.send_message(message.chat.id, "Hi all!Thanks for adding me!")
 		    else:
 		    	bot.restrict_chat_member(message.chat.id, user.id, permissions=telebot.types.ChatPermissions(can_send_messages = False,can_send_media_messages = False,can_send_audios = False,can_send_documents = False,can_send_photos = False,can_send_videos = False,can_send_video_notes = False,can_send_voice_notes = False,can_send_polls = False,can_send_other_messages = False,can_add_web_page_previews = False,can_change_info = False,can_invite_users = False,can_pin_messages = False,can_manage_topics = False))
@@ -68,7 +68,7 @@ def callback(call):
 
 @bot.message_handler(content_types=['left_chat_member'])
 def left(message):
-		if message.left_chat_member.id == 5852107619:
+		if message.left_chat_member.id == BOT_ID:
 			pass
 		else:
 			bot.send_chat_action(message.chat.id, "typing")
@@ -82,13 +82,13 @@ def ban_user(message):
 	else:
 		get = bot.get_chat_member(message.chat.id, message.from_user.id)
 		getadmin = bot.get_chat_member(message.chat.id,message.reply_to_message.from_user.id)
-		getbot = bot.get_chat_member(message.chat.id, 5852107619)
+		getbot = bot.get_chat_member(message.chat.id, BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_restrict_members == True:
 				if message.reply_to_message:
 					if get.status in ["creator", "administrator"]:
 						if getadmin.status in ['creator', 'administrator']:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID:
 								bot.send_message(message.chat.id, "I can't ban myself...Don't try it again.")
 							else:
 								bot.reply_to(message, "Admin trying to ban admin...Any last words?")
@@ -116,13 +116,13 @@ def unban_user(message):
 	else:
 		get = bot.get_chat_member(message.chat.id, message.from_user.id)
 		getadmin=bot.get_chat_member(message.chat.id,message.reply_to_message.from_user.id)
-		getbot=bot.get_chat_member(message.chat.id, 5852107619)
+		getbot=bot.get_chat_member(message.chat.id, BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_restrict_members == True:
 				if message.reply_to_message:
 					if get.status in ['creator', 'administrator']:
 						if getadmin.status in ['creator', 'administrator']:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID:
 								bot.reply_to(message, "I needn't unban command,I am admin")
 							else:
 								bot.reply_to(message, "I can't unban an admin,admins cannot be banned.Where did stupid ideas come from?")
@@ -151,13 +151,13 @@ def mute_user(message):
 	else:
 		get = bot.get_chat_member(message.chat.id,message.from_user.id)
 		getadmin = bot.get_chat_member(message.chat.id, message.reply_to_message.from_user.id)
-		getbot = bot.get_chat_member(message.chat.id, 5852107619)
+		getbot = bot.get_chat_member(message.chat.id, Bot_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_restrict_members == True:
 				if message.reply_to_message:
 					if get.status in ['creator', 'administrator']:
 						if getadmin.status in ['creator', 'administrator']:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID:
 								bot.reply_to(message, "I needn't mute command,thanks!")
 							else:
 								bot.reply_to(message, "Admins don't want any mute,I think.")
@@ -186,13 +186,13 @@ def unmute_user(message):
 	else:
 		get = bot.get_chat_member(message.chat.id,message.from_user.id)
 		getadmin = bot.get_chat_member(message.chat.id, message.reply_to_message.from_user.id)
-		getbot = bot.get_chat_member(message.chat.id, 5852107619)
+		getbot = bot.get_chat_member(message.chat.id, Bot_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_restrict_members == True:
 				if message.reply_to_message:
 					if get.status in ['creator', 'administrator']:
 						if getadmin.status in ['creator', 'administrator']:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID:
 								bot.reply_to(message, "I needn't unmute command.Are you crazy?")
 							else:
 								bot.reply_to(message, "I thought admins don't need unmute command...")
@@ -221,13 +221,13 @@ def promote_user(message):
 	else:
 		get=bot.get_chat_member(message.chat.id,message.from_user.id)
 		getadmin=bot.get_chat_member(message.chat.id,message.reply_to_message.from_user.id)
-		getbot=bot.get_chat_member(message.chat.id,5852107619)
+		getbot=bot.get_chat_member(message.chat.id,BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_promote_members == True:
 				if message.reply_to_message:
 					if get.status in ['creator']:
 						if getadmin.status in ['creator','administrator']:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID 
 								bot.reply_to(message, "I am admin,I needn't any promotes for now.")
 							else:
 								bot.reply_to(message,f"You needn't promote {message.reply_to_message.from_user.first_name},he is already an admin.")
@@ -255,7 +255,7 @@ def demote_user(message):
 	else:
 		get=bot.get_chat_member(message.chat.id,message.from_user.id)
 		getadmin=bot.get_chat_member(message.chat.id,message.reply_to_message.from_user.id)
-		getbot=bot.get_chat_member(message.chat.id,5852107619)
+		getbot=bot.get_chat_member(message.chat.id,BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_promote_members == True:
 				if message.reply_to_message:
@@ -263,7 +263,7 @@ def demote_user(message):
 						if getadmin.status not in ['creator','administrator']:
 							bot.reply_to(message,f"You needn't demote {message.reply_to_message.from_user.first_name},He is already a user.")
 						else:
-							if message.reply_to_message.from_user.id == 5852107619:
+							if message.reply_to_message.from_user.id == BOT_ID:
 								bot.reply_to(message, "I can't demote myself.Nice try!")
 							else:
 								try:
@@ -288,7 +288,7 @@ def pin(message):
 		bot.reply_to(message, "This command works only groups and channels.")
 	else:
 		get=bot.get_chat_member(message.chat.id,message.from_user.id)
-		getbot=bot.get_chat_member(message.chat.id, 5852107619)
+		getbot=bot.get_chat_member(message.chat.id, BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_pin_messages == True:
 				if message.reply_to_message:
@@ -315,7 +315,7 @@ def unpin(message):
 		bot.reply_to(message, "This command works only groups and channels.")
 	else:
 		get = bot.get_chat_member(message.chat.id,message.from_user.id)
-		getbot = bot.get_chat_member(message.chat.id)
+		getbot = bot.get_chat_member(message.chat.id, BOT_ID)
 		if getbot.status in ['administrator']:
 			if getbot.can_pin_messages == True:
 				if message.reply_to_message:
